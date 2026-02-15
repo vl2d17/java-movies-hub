@@ -56,13 +56,13 @@ public class MoviesHandler extends BaseHttpHandler {
     private void handlePostMovies(HttpExchange ex) throws IOException {
 
         String contentType = ex.getRequestHeaders().getFirst("Content-Type");
-        if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith
-                ("application/json")) {
+        if (contentType == null || !contentType.toLowerCase(Locale.ROOT).startsWith("application/json")) {
             sendBadRequest(ex, "Content-Type must be application/json");
             return;
         }
 
         byte[] bodyBytes = ex.getRequestBody().readAllBytes();
+
         if (bodyBytes.length > MAX_REQUEST_SIZE) {
             sendBadRequest(ex, "Request body too large. Maximum size is " + MAX_REQUEST_SIZE
                     + " bytes.");
