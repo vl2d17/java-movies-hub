@@ -17,7 +17,7 @@ public class MoviesServer {
         try {
             server = HttpServer.create(new InetSocketAddress(port), 0);
 
-            // Добавьте контекст для /movies и укажите созданный хендлер
+
             server.createContext("/movies", new MoviesHandler(store));
 
         } catch (IOException e) {

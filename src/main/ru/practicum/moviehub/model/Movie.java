@@ -6,12 +6,17 @@ public class Movie {
     private Integer year;
     private String director;
 
+    public Movie() {
+
+    }
+
     public Movie(String title, Integer id, Integer year, String director) {
         this.title = title;
         this.id = id;
         this.year = year;
         this.director = director;
     }
+
 
     public String getTitle() {
         return title;

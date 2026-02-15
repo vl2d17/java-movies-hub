@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 import ru.practicum.moviehub.model.Movie;
 
 public class MoviesStore {
     private final Map<Integer, Movie> movies = new ConcurrentHashMap<>();
-    private final AtomicLong idGenerator = new AtomicLong(1);
+    private final AtomicInteger idGenerator = new AtomicInteger(1);
 
     public List<Movie> getAllMovies() {
         return new ArrayList<>(movies.values());

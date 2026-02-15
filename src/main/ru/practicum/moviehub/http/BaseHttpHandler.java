@@ -1,8 +1,8 @@
 package ru.practicum.moviehub.http;
 
+import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import ru.practicum.moviehub.api.JsonUtil;
 import ru.practicum.moviehub.api.ErrorResponse;
 
 import java.io.IOException;
@@ -11,9 +11,10 @@ import java.nio.charset.StandardCharsets;
 
 public abstract class BaseHttpHandler implements HttpHandler {
     protected static final String CT_JSON = "application/json; charset=UTF-8";
+    private static final Gson gson = new Gson();
 
     protected void sendJson(HttpExchange ex, int status, Object data) throws IOException {
-        String json = JsonUtil.toJson(data);
+        String json = gson.toJson(data);
         byte[] responseBytes = json.getBytes(StandardCharsets.UTF_8);
 
         ex.getResponseHeaders().set("Content-Type", CT_JSON);
@@ -21,12 +22,17 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
         try (OutputStream os = ex.getResponseBody()) {
             os.write(responseBytes);
+            os.flush();
         }
     }
 
     protected void sendNoContent(HttpExchange ex) throws IOException {
         ex.getResponseHeaders().set("Content-Type", CT_JSON);
         ex.sendResponseHeaders(204, -1);
+
+        try (OutputStream os = ex.getResponseBody()) {
+
+        }
     }
 
     protected void sendError(HttpExchange ex, int status, String message) throws IOException {
@@ -50,5 +56,9 @@ public abstract class BaseHttpHandler implements HttpHandler {
 
     protected void sendBadRequest(HttpExchange ex, String message) throws IOException {
         sendError(ex, 400, message);
+    }
+
+    protected void sendConflict(HttpExchange ex, String message) throws IOException {
+        sendError(ex, 409, message);
     }
 }
