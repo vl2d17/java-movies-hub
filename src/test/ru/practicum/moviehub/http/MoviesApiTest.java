@@ -247,8 +247,11 @@ public class MoviesApiTest {
 
         ErrorResponse error = gson.fromJson(resp.body(), ErrorResponse.class);
         assertEquals(400, error.getStatus());
-        assertTrue(error.getMessage().contains("year") &&
-                (error.getMessage().contains("earlier") || error.getMessage().contains("early")));
+
+
+        assertEquals("Invalid movie data: Movie year cannot be earlier than 1888 (the birth of cinema)",
+                error.getMessage());
+
     }
 
 }

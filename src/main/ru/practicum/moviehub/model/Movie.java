@@ -13,6 +13,12 @@ public class Movie {
     public Movie(String title, Integer id, Integer year, String director) {
         this.title = title;
         this.id = id;
+
+
+        if (year != null && year < 1888) {
+            throw new IllegalArgumentException("Movie year cannot be earlier than 1888 (the birth of cinema). Got: "
+                    + year);
+        }
         this.year = year;
         this.director = director;
     }
@@ -39,6 +45,10 @@ public class Movie {
     }
 
     public void setYear(Integer year) {
+        if (year != null && year < 1888) {
+            throw new IllegalArgumentException("Movie year cannot be earlier than 1888 (the birth of cinema). Got: "
+                    + year);
+        }
         this.year = year;
     }
 
